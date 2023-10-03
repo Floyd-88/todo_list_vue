@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <form class="form_items">
+    <div class="form_items">
       <!-- шапка -->
       <HeaderTodoList/>
 
@@ -15,9 +15,11 @@
       <!-- добавление задачи -->
       <AddItemTodoList/>
 
+      <FormItemTodoList/>
+
       <!-- статистика выполненных/не выполненных задач -->
       <StatisticsTodoList/>
-    </form>
+    </div>
 
   </div>
 </template>
@@ -29,6 +31,7 @@ import FilterItemsTodoList from './components/FilterItemsTodoList.vue'
 import ItemsTodoList from './components/ItemsTodoList.vue'
 import AddItemTodoList from './components/AddItemTodoList.vue'
 import StatisticsTodoList from './components/StatisticsTodoList.vue'
+import FormItemTodoList from './components/FormItemTodoList.vue'
 
 export default defineComponent({
   name: "App",
@@ -37,7 +40,8 @@ export default defineComponent({
     FilterItemsTodoList,
     ItemsTodoList,
     AddItemTodoList,
-    StatisticsTodoList
+    StatisticsTodoList,
+    FormItemTodoList
   }
 })
 </script>

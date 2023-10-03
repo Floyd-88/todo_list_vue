@@ -37,14 +37,24 @@ body
     border: 1px solid #80808036
     border-radius: 6px
     margin-bottom: 20px
+    &:hover
+        .item_icon, .item_remove
+            display: block 
+
+.item_icon
+    display: none
 
 .item_text
     padding: 10px 15px
-    cursor: pointer
+    cursor: pointer     
 
 .item_remove
+    display: none
     padding-right: 10px
     cursor: pointer
+    &:hover
+        display: block
+        color:red
 
 .add_item
     width: 500px
