@@ -1,76 +1,22 @@
 <template>
-  <!-- <HeaderTodoList/> -->
   <div class="main">
-    <!-- форма с задачами -->
     <form class="form_items">
       <!-- шапка -->
-      <div class="header">
-        МОЙ СПИСОК ЗАДАЧ
-      </div>
+      <HeaderTodoList/>
 
       <el-tabs type="border-card">
-        <el-tab-pane label="Все">Все</el-tab-pane>
-        <el-tab-pane label="Активные">Активные</el-tab-pane>
-        <el-tab-pane label="Завершенные">Завершенные</el-tab-pane>
+        <!-- выбор вкладки с активными задчами -->
+        <FilterItemsTodoList/>
 
         <!-- список задач -->
-        <div class="list_items">
-          <div class="wrapper_item">
-            <div class="item_icon">
-              <Check class="check_el" />
-            </div>
-            <div class="item_text">Задача номер один на сегодня - позаниматься в програмировании, изучить фреймворк вью жс
-              и тайп скрипт!!!</div>
-            <div class="item_remove">
-              <DeleteFilled class="remove_el" />
-            </div>
-          </div>
-          <div class="wrapper_item">
-            <div class="item_icon">
-              <Check class="check_el" />
-            </div>
-            <div class="item_text">Задача номер два на сегодня - позаниматься в програмировании, изучить фреймворк вью жс
-              и тайп скрипт!!!</div>
-            <div class="item_remove">
-              <DeleteFilled class="remove_el" />
-            </div>
-          </div>
-          <div class="wrapper_item">
-            <div class="item_icon">
-              <Check class="check_el" />
-            </div>
-            <div class="item_text">Задача номер три на сегодня - позаниматься в програмировании, изучить фреймворк вью жс
-              и тайп скрипт!!!</div>
-            <div class="item_remove">
-              <DeleteFilled class="remove_el" />
-            </div>
-          </div>
-          <div class="wrapper_item">
-            <div class="item_icon">
-              <Check class="check_el" />
-            </div>
-            <div class="item_text">Задача номер четыре на сегодня - позаниматься в програмировании, изучить фреймворк вью
-              жс и тайп скрипт!!!</div>
-            <div class="item_remove">
-              <DeleteFilled class="remove_el" />
-            </div>
-          </div>
-        </div>
+        <ItemsTodoList/>
       </el-tabs>
 
       <!-- добавление задачи -->
-      <div class="add_item">
-        <el-button round>
-          <el-icon :size="20">
-            <Plus color="red" />
-          </el-icon>
-        </el-button>
-      </div>
+      <AddItemTodoList/>
 
       <!-- статистика выполненных/не выполненных задач -->
-      <div class="statistics">
-        выполненных 1, осталось 3
-      </div>
+      <StatisticsTodoList/>
     </form>
 
   </div>
@@ -78,15 +24,20 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Check, DeleteFilled, Plus } from '@element-plus/icons-vue'
-// import HeaderTodoList from './components/HeaderTodoList.vue'
+import HeaderTodoList from './components/HeaderTodoList.vue'
+import FilterItemsTodoList from './components/FilterItemsTodoList.vue'
+import ItemsTodoList from './components/ItemsTodoList.vue'
+import AddItemTodoList from './components/AddItemTodoList.vue'
+import StatisticsTodoList from './components/StatisticsTodoList.vue'
 
 export default defineComponent({
   name: "App",
   components: {
-    Check,
-    DeleteFilled,
-    Plus
+    HeaderTodoList,
+    FilterItemsTodoList,
+    ItemsTodoList,
+    AddItemTodoList,
+    StatisticsTodoList
   }
 })
 </script>

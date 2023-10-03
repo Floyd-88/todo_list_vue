@@ -1,3 +1,5 @@
 <template>
-    <div>Шапка</div>
+    <div class="header">
+        МОЙ СПИСОК ЗАДАЧ
+      </div>
 </template>
