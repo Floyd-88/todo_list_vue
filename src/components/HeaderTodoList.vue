@@ -1,5 +1,5 @@
 <template>
     <div class="header">
-        МОЙ СПИСОК ЗАДАЧ
+        My ToDo List
       </div>
 </template>

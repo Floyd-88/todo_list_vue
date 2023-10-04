@@ -1,9 +1,12 @@
 <template>
     <div class="wrapper_item">
-        <div class="item_icon" :class="{'done_icon': todo.done}">
-            <Check class="check_el" />
+        <div class="item_content">
+            <div class="item_icon" :class="{ 'done_icon': todo.done }">
+                <Check class="check_el" />
+            </div>
+            <div class="item_text" :class="{ 'done_item': todo.done }" @click="doneTodo()">{{ todo.text }}</div>
         </div>
-        <div class="item_text" :class="{'done_item': todo.done}" @click="doneTodo()">{{ todo.text }}</div>
+
         <div class="item_remove" @click="removeTodo()">
             <DeleteFilled class="remove_el" />
         </div>
@@ -47,8 +50,17 @@ export default defineComponent({
 </script>
 
 <styles lang="sass">
+@import '../assets/styles/main.sass' 
+
 .done_item
     text-decoration: line-through
+
 .done_icon
     display: block !important
+    
+.item_content
+    display: flex
+    align-items: center
+    justify-content: center
+    padding-left: 10px
 </styles>

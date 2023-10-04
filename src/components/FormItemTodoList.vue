@@ -1,21 +1,40 @@
 <template>
-    <el-form :model="form">
+    <el-form :model="form" v-if="isShowForm">
+        <div class="close" @click="closeFormTodod()">
+        <el-icon center><CloseBold /></el-icon>
+        </div>
+        <h3 class="title_form">Новая задача</h3>
         <el-form-item>
-            <el-input v-model="form.desc" type="textarea" />
+            <el-input v-model="form.desc" placeholder="добавить задачу..." type="textarea" />
         </el-form-item>
         <el-form-item>
-            <el-button type="primary" @click="onSubmit">Create</el-button>
+            <el-button type="primary" @click="addTodoList">Создать</el-button>
         </el-form-item>
     </el-form>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
+import { CloseBold } from '@element-plus/icons-vue'
+import {Todo} from '../types/Todo'
+
+interface State {
+    form: {
+        desc: string
+    }
+}
 
 export default defineComponent({
     name: 'FormItemTodoList',
 
-    data() {
+    props: {
+        isShowForm: {
+            type: Boolean,
+            required: true
+        }
+    },
+
+    data(): State {
         return {
             form: {
                 desc: '',
@@ -24,13 +43,43 @@ export default defineComponent({
     },
 
     methods: {
-        onSubmit() {
-            console.log('submit!')
+        addTodoList() {
+            this.$emit('addTodoList', {
+                id: Date.now(),
+                text: this.form.desc,
+                done: false
+            })
+            this.form.desc = ''
+        },
+
+        closeFormTodod() {
+            this.$emit('closeFormTodod')
         }
     },
 
-    components: {
+    emits:{
+        closeFormTodod: () => true,
+        addTodoList: (todo: Todo) =>  todo
+    },
 
+    components: {
+        CloseBold
     }
 })
 </script>
+<styles lang="sass">
+@import '../assets/styles/main.sass' 
+
+.title_form
+    padding-bottom: 10px
+    margin: 0
+    text-align: center
+    font-family: $fira
+
+.close
+    text-align: end
+    margin: 3px 3px 0 3px
+    cursor: pointer
+    &:hover
+        color: red
+</styles>

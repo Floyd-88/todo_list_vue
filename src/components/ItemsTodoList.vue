@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import { Todo } from '@/types/Todo'
 import ItemTodoList from './ItemTodoList.vue'
 
@@ -16,42 +16,26 @@ interface State {
 export default defineComponent({
     name: 'ItemsTodoList',
 
-    data(): State {
-        return {
-            todos: [
-                {
-                    id: 0,
-                    text: 'Задача номер один на сегодня - позаниматься в програмировании, изучить фреймворк вью жс и тайп скрипт!!!',
-                    done: false
-                },
-                {
-                    id: 1,
-                    text: 'Задача номер два на сегодня - позаниматься в програмировании, изучить фреймворк вью жс и тайп скрипт!!!',
-                    done: false
-                },
-                {
-                    id: 2,
-                    text: 'Задача номер три на сегодня - позаниматься в програмировании, изучить фреймворк вью жс и тайп скрипт!!!',
-                    done: false
-                },
-
-            ]
+    props: {
+        todos: {
+            type: Array as PropType<Todo[]>,
+            required: true
         }
     },
 
     methods: {
         doneTodo(id: number) {
-            this.todos.map((todo: Todo) => {
-                if (todo.id === id) {
-                    todo.done = !todo.done
-                }
-            })
+            this.$emit('doneTodo', id)
         },
 
         removeTodo(id:number) {
-            console.log('fff')
-            this.todos = this.todos.filter((todo: Todo) => todo.id !== id)
+            this.$emit('removeTodo', id)
         }
+    },
+
+    emits: {
+        doneTodo: (id: number) => Number.isInteger(id),
+        removeTodo: (id: number) => Number.isInteger(id)
     },
 
     components: {
