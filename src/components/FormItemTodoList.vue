@@ -3,7 +3,7 @@
         <div class="close" @click="closeFormTodod()">
         <el-icon center><CloseBold /></el-icon>
         </div>
-        <h3 class="title_form">Новая задача</h3>
+        <h3 class="title_form">New task</h3>
         <el-form-item>
             <el-input v-model="form.desc" placeholder="добавить задачу..." type="textarea" />
         </el-form-item>

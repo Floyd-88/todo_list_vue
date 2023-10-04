@@ -4,12 +4,12 @@
       <!-- шапка -->
       <HeaderTodoList />
 
-      <el-tabs type="border-card">
+      <el-tabs type="border-card" v-model="activeName" class="demo-tabs">
         <!-- выбор вкладки с активными задчами -->
         <FilterItemsTodoList />
 
         <!-- список задач -->
-        <ItemsTodoList :todos="todos" @doneTodo="doneTodo" @removeTodo="removeTodo" />
+        <ItemsTodoList :todos="filterTodo" @doneTodo="doneTodo" @removeTodo="removeTodo" />
       </el-tabs>
 
       <!-- добавление задачи -->
@@ -18,7 +18,7 @@
       <FormItemTodoList :isShowForm="isShowForm" @closeFormTodod="closeFormTodod" @addTodoList="addTodoList" />
 
       <!-- статистика выполненных/не выполненных задач -->
-      <StatisticsTodoList />
+      <StatisticsTodoList :stats="stats"/>
     </div>
 
   </div>
@@ -35,9 +35,13 @@ import FormItemTodoList from './components/FormItemTodoList.vue'
 
 import { Todo } from './types/Todo'
 
+import {Stats} from './components/StatisticsTodoList.vue'
+
+
 interface State {
   isShowForm: boolean,
-  todos: Todo[]
+  todos: Todo[],
+  activeName: 'all' | 'active' | 'done'
 }
 
 export default defineComponent({
@@ -63,7 +67,38 @@ export default defineComponent({
           text: 'Задача номер три на сегодня - позаниматься в програмировании, изучить фреймворк вью жс и тайп скрипт!!!',
           done: false
         }
-      ]
+      ],
+
+      activeName: 'all'
+    }
+  },
+
+  computed: {
+    filterTodo(): Todo[] {
+      switch (this.activeName) {
+        case 'active':
+          return this.activeFilter
+        case 'done':
+          return this.doneFilter
+        case 'all':
+        default:
+          return this.todos
+      }
+    },
+
+    stats(): Stats {
+      return {
+        active: this.activeFilter.length,
+        done: this.doneFilter.length 
+      }
+    },
+
+    activeFilter(): Todo[] {
+      return this.todos.filter(todo => !todo.done)
+    },
+
+    doneFilter(): Todo[] {
+      return this.todos.filter(todo => todo.done)
     }
   },
 
@@ -90,7 +125,7 @@ export default defineComponent({
 
     removeTodo(id: number) {
       this.todos = this.todos.filter((todo: Todo) => todo.id !== id)
-    }
+    },
   },
 
   components: {
