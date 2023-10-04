@@ -16,11 +16,13 @@ export default defineComponent({
 
     methods: {
         showForm() {
-            this.$emit('showForm')
+            this.$emit('showForm', true)
         }
     },
 
-    emits:['showForm'],
+    emits:{
+        showForm: (bool: boolean) => Boolean
+    },
 
     components: {
         CirclePlus

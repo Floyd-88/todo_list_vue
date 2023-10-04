@@ -12,13 +12,14 @@
         <ItemsTodoList :todos="filterTodo" @doneTodo="doneTodo" @removeTodo="removeTodo" />
       </el-tabs>
 
-      <!-- добавление задачи -->
+      <!-- кнопка для раскрытия формы -->
       <AddItemTodoList @showForm="showForm" />
 
-      <FormItemTodoList :isShowForm="isShowForm" @closeFormTodod="closeFormTodod" @addTodoList="addTodoList" />
+      <!-- форма для добавление новой задачи -->
+      <FormItemTodoList :isShowForm="isShowForm" @showForm="showForm" @addTodoList="addTodoList" />
 
       <!-- статистика выполненных/не выполненных задач -->
-      <StatisticsTodoList :stats="stats"/>
+      <StatisticsTodoList :stats="stats" />
     </div>
 
   </div>
@@ -34,9 +35,7 @@ import StatisticsTodoList from './components/StatisticsTodoList.vue'
 import FormItemTodoList from './components/FormItemTodoList.vue'
 
 import { Todo } from './types/Todo'
-
-import {Stats} from './components/StatisticsTodoList.vue'
-
+import { Stats } from './components/StatisticsTodoList.vue'
 
 interface State {
   isShowForm: boolean,
@@ -47,27 +46,15 @@ interface State {
 export default defineComponent({
   name: "App",
 
+  mounted() {
+    this.loadItemsTask()
+  },
+
   data(): State {
     return {
       isShowForm: false,
 
-      todos: [
-        {
-          id: 0,
-          text: 'Задача номер один на сегодня - позаниматься в програмировании, изучить фреймворк вью жс и тайп скрипт!!!',
-          done: false
-        },
-        {
-          id: 1,
-          text: 'Задача номер два на сегодня - позаниматься в програмировании, изучить фреймворк вью жс и тайп скрипт!!!',
-          done: false
-        },
-        {
-          id: 2,
-          text: 'Задача номер три на сегодня - позаниматься в програмировании, изучить фреймворк вью жс и тайп скрипт!!!',
-          done: false
-        }
-      ],
+      todos: [],
 
       activeName: 'all'
     }
@@ -89,7 +76,7 @@ export default defineComponent({
     stats(): Stats {
       return {
         active: this.activeFilter.length,
-        done: this.doneFilter.length 
+        done: this.doneFilter.length
       }
     },
 
@@ -103,16 +90,22 @@ export default defineComponent({
   },
 
   methods: {
-    showForm() {
-      this.isShowForm = true
+    loadItemsTask() {
+      let localItems: string | null = localStorage.getItem('todos');
+      if(localItems !== null) {
+        this.todos = JSON.parse(localItems);
+      } else {
+        this.todos = []
+      }
     },
 
-    closeFormTodod() {
-      this.isShowForm = false
+    showForm(bool: boolean) {
+      this.isShowForm = bool
     },
 
     addTodoList(todo: Todo) {
       this.todos.unshift(todo)
+      localStorage.setItem('todos', JSON.stringify(this.todos))
     },
 
     doneTodo(id: number) {
@@ -121,10 +114,12 @@ export default defineComponent({
           todo.done = !todo.done
         }
       })
+      localStorage.setItem('todos', JSON.stringify(this.todos))
     },
 
     removeTodo(id: number) {
       this.todos = this.todos.filter((todo: Todo) => todo.id !== id)
+      localStorage.setItem('todos', JSON.stringify(this.todos))
     },
   },
 

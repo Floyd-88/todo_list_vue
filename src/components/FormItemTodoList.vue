@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent } from 'vue'
 import { CloseBold } from '@element-plus/icons-vue'
 import {Todo} from '../types/Todo'
 
@@ -53,12 +53,12 @@ export default defineComponent({
         },
 
         closeFormTodod() {
-            this.$emit('closeFormTodod')
+            this.$emit('showForm', false)
         }
     },
 
     emits:{
-        closeFormTodod: () => true,
+        showForm: (bool: false) => Boolean,
         addTodoList: (todo: Todo) =>  todo
     },
 
